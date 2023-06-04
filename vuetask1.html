@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页汇率计算器的设计与实现</title>
+    <script src="vue.js"></script>
+    <style>
+    p.title{
+        margin:200px 0 20px 0;
+        font-style:oblique;
+        text-align:center;
+        font-size:30px;
+        font-family:'Courier New', Courier, monospace;
+        color:rgb(2, 183, 255);
+    }
+    p.click{
+        text-align: center;
+        font-size: 14px;
+        color: rgb(243, 6, 152);
+    }
+    ul{
+        margin:10px auto;
+        width:300px;
+        list-style-type: decimal;
+        border:2px solid #0278ff;
+        border-radius:10px;
+        font-size:15px;
+        font-weight:lighter;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    li{
+        padding:10px;
+    }
+    li:first-child{
+        display: flex;
+        border-bottom:2px splid #999;
+    }
+    li:not(:first-child):hover{
+        background-color:#ddd;
+    }
+    span{
+        cursor:default;
+    }
+    span:last-child{
+        float:right;
+    }
+    input{
+        text-align:right;
+        border:none;
+        font-size:16px;
+        width:100px;
+        margin-left:auto;
+        font-weight:bold;
+        font-family: 'Courier New', Courier, monospace;
+        outline:none;
+        border-bottom: 1px solid #000;
+    }
+    body{
+        background: url("1.jpg") no-repeat fixed;
+        background-size: cover;
+    }
+    </style>
+</head>
+<body> 
+    <div id="app">
+       
+        <p class="title">网页汇率计算器</p>
+        <ul>
+            <li>
+                <span>{{from.currency}}</span>
+                <input v-model="from.amount"></input>
+            </li>
+            <li v-for="item in to" v-bind:data-currency="item.currency" v-on:click="changeCurrency">
+                <span>{{item.currency}}</span>
+                <span>{{item.amount}}</span>
+            </li>
+        </ul>
+        <p class="click">鼠标点击货币可以切换货币</p>
+    </div>
+    <script>
+        let rate={
+            人民币:{人民币:1     ,日元:16.876, 港元:1.1870, 美元:0.1526, 欧元:0.1294,加拿大元:0.1972,英镑:0.1176,澳大利亚元:0.217},
+            日元:{人民币:0.0595,日元:1 ,港元:0.0702, 美元:0.0090, 欧元:0.0077 , 加拿大元:0.0101,英镑:0.0060,澳大利亚元:0.0112   },
+            港元:{人民币:0.8463, 日元:14.226,港元:1, 美元:0.1286, 欧元: 0.10952  ,加拿大元:0.1723,英镑:0.1028,澳大利亚元:0.1897 },
+            美元:{人民币:6.5813, 日元:110.62, 港元:7.7759, 美元:1, 欧元:0.85164 ,加拿大元:1.325,英镑:0.8066,澳大利亚元:1.4886  },
+            加拿大元:{人民币:5.0838, 日元:98.2511, 港元:5.8062, 美元:0.7394, 欧元:0.6781  ,加拿大元:1,英镑:0.8796,澳大利亚元:1.6237  },
+            英镑:{人民币:8.5077, 日元:164.7989, 港元:9.7371, 美元:1.2401, 欧元:1.1371 ,加拿大元:1.6781,英镑:1,澳大利亚元:1.8474  },
+            澳大利亚元:{人民币:4.7170, 日元:89.2538, 港元:5.2748, 美元:0.6718, 欧元:0.6159 ,加拿大元:0.9087,英镑:0.5418,澳大利亚元:1   },
+            欧元:{人民币:7.7278, 日元:129.89, 港元:9.1304, 美元:1.1742, 欧元:1 ,加拿大元:0.1972,英镑:0.1176,澳大利亚元:0.217   },
+        }
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                from:{currency:'人民币',amount:100},
+                to:[
+                    {currency:'日元',amount:0},
+                    {currency:'港元',amount:0},
+                    {currency:'美元',amount:0},
+                    {currency:'加拿大元',amount:0},
+                    {currency:'欧元',amount:0},
+                    {currency:'英镑',amount:0},
+                    {currency:'澳大利亚元',amount:0},
+            ]
+            },
+            methods:{
+                exchange(from,amount,to){
+                    return(amount * rate[from][to])
+                },
+                changeCurrency(event){
+                    const c = event.currentTarget.dataset.currency;
+                    const f = this.from.currency;
+                    this.from.currency= c;
+                    this.to.find(_ => _.currency === c).currency = f;
+                }
+            },
+                watch:{
+                from:{
+                    handler(value){
+                        this.to.forEach(item => {
+                            item.amount = this.exchange(this.from.currency,
+                            this.from.amount, item.currency)
+                        });
+                    },
+                    deep:true,
+                    immediate:true
+                }
+            }
+        })
+    </script>
+</body>
+</html>

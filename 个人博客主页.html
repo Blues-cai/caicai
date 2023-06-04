@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔡蔡の前端工坊</title>
+    <!-- <link rel="text/javascript" href="jquery.min.js"> -->
+    <script src="//ku.dzzui.com/js/jquery.min.js"></script>
+    <script src="//api.dzzui.com/api/yinghua"></script>
+    <!-- <embed src="泠鸢yousa,朽木素,魂喵喵 - 花月成双【泠鸢yousa＼朽木素＼魂喵喵】翻唱.mp3" autostart="true" loop="true" hidden="flase"></embed> -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        body {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000000;
+            /* background: linear-gradient(45deg, rgb(253, 152, 44), rgb(243, 50, 169)); */
+        }
+
+        .shell {
+            height: 100%;
+            /* width: 1220px; */
+            width: 100vw;
+            overflow-x: hidden;
+            perspective: 3px;
+        }
+
+        .nav {
+            width: 100vw;
+            height: 70px;
+            position: relative;
+            top: 0;
+            box-shadow: 0 5px 20px rgb(149, 149, 149);
+            background-color: #fefefe;
+            opacity: 0.8;
+            border-radius: 10px;
+        }
+
+        .nav ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            right: 5%;
+        }
+
+        .nav ul .nav-box {
+            position: absolute;
+            bottom: 0;
+            /* top: 0; */
+            left: 0;
+            /* right: 0; */
+            width: calc((100% / 6)*1);
+            /*将导航栏分为6个部分,calc函数就是用来计算的*/
+            height: 10%;
+            border-radius: 2px;
+            transition: .5s;
+            opacity: 0.5;
+        }
+
+
+        .nav ul li {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .nav ul li a {
+            color: rgb(0, 0, 0);
+            font: 100 25px '等线';
+            display: block;
+            font-style: italic;
+            width: 100%;
+            height: 100%;
+            line-height: 70px;
+            padding-top: 5px;
+            /* bottom: 0; */
+        }
+
+
+
+
+
+        .nav ul li:nth-child(1):hover~.nav-box {
+            left: calc(100% / 6*0);
+            background-color: red;
+        }
+
+        .nav ul li:nth-child(2):hover~.nav-box {
+            left: calc(100%/6*1);
+            background-color: rgb(237, 177, 46);
+        }
+
+        .nav ul li:nth-child(3):hover~.nav-box {
+            left: calc(100%/6*2);
+            background-color: rgb(41, 208, 33);
+        }
+
+        .nav ul li:nth-child(4):hover~.nav-box {
+            left: calc(100%/6*3);
+            background-color: rgb(60, 219, 231);
+        }
+
+        .nav ul li:nth-child(5):hover~.nav-box {
+            left: calc(100%/6*4);
+            background-color: rgb(56, 56, 252);
+        }
+
+        .nav ul li:nth-child(6):hover~.nav-box {
+            left: calc(100%/6*5);
+            background-color: rgb(237, 86, 225);
+        }
+
+        .shell div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: 30px;
+            letter-spacing: 2px;
+        }
+
+        .image {
+            transform: translateZ(-1px) scale(1.6);
+            background-size: cover;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        #retutop #btn {
+            width: 70px;
+            height: 70px;
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            /* border-radius: 10px; */
+            background-image: url("t019f145d8663e29c73.jpg");
+            background-size: 70px;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+        }
+
+        #retutop #btn:hover {
+            background: url("t019f145d8663e29c73.jpg");
+            background-size: 70px;
+            background-repeat: no-repeat;
+            opacity: 1;
+        }
+
+        #retutop a {
+            border-radius: 140px;
+            /* display: hidden; */
+        }
+
+        .text {
+            height: 50vh;
+            /* background: linear-gradient(45deg, rgb(247, 146, 68), rgb(255, 45, 136)); */
+            background-color: #fff;
+            /* font-style: italic; */
+        }
+
+        .text h1 {
+            color: black;
+            font-style: italic;
+            font-size: 50px;
+            /* font-size: small; */
+        }
+
+        .heading {
+            z-index: -1;
+            /* x轴正向向右，y轴正向向下 */
+            transform: translateY(-27.5vh) translateZ(1px);
+            color: #fff;
+            font-size: 30px;
+            font-style: italic;
+        }
+
+        .music-player {
+            width: 300px;
+            /* 宽为600px */
+            height: 100px;
+            /* 长为300px */
+            /* background: #FFA500; */
+            /* 背景设为橙色 */
+            border-radius: 25px;
+            /* 设置圆角 */
+            position: fixed;
+            left: -260px;
+            top: 70px;
+            opacity: 0.3;
+            transition: .3s;
+
+        }
+
+        .music-player:hover {
+            width: 300px;
+            /* 宽为600px */
+            height: 150px;
+            /* 长为300px */
+            /* background: #FFA500; */
+            /* 背景设为橙色 */
+            border-radius: 25px;
+            /* 设置圆角 */
+            position: fixed;
+            left: 0;
+            top: 70px;
+            opacity: 1;
+            transition: .3s;
+        }
+
+        .music-player p {
+            font-style: italic;
+            color: #61e7ff
+                /* 设置颜色为蓝色 */
+        }
+
+        /* hr {
+            height: 10vh;
+            width: 10vw;
+            z-index: -1;
+            color: #000000;
+            transform: translateZ(-1px) scale(1.6);
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="shell">
+        <div class="nav" id="db">
+            <ul>
+                <li><a href="个人博客主页.html">个人首页</a></li>
+                <li><a href="轮播图.html">个人相册</a></li>
+                <li><a href="#">个人资料</a></li>
+                <li><a href="#">个人展示</a></li>
+                <li><a href="#">登入</a></li>
+                <li><a href="#">注册</a></li>
+                <div class="nav-box"></div>
+            </ul>
+        </div>
+        <div class="image" style="background-image: url('./wallhaven-mdy5p8.jpg');"></div>
+        <div class="heading">
+            <h1>欢迎来到蔡蔡の个人博客</h1>
+            <!-- <hr> -->
+            <!-- <p>welcome to my channel</p> -->
+        </div>
+        <div class="text">
+            <h1>诞生于2003,梦想写个前端</h1>
+        </div>
+
+
+        <div class="image" style="background-image: url('./wallhaven-dgwpqo.png');"></div>
+        <div class="heading">
+            <h1>When you're down</h1>
+        </div>
+        <div class="text">
+            <h1>Try to wake up the beast in your heart</h1>
+        </div>
+
+        <div class="image" style="background-image: url('./6.jpg');"></div>
+        <div class="heading">
+            <h1>When people leave you</h1>
+        </div>
+        <div class="text">
+            <h1>It's time to start your season</h1>
+        </div>
+
+        <div class="image" style="background-image: url('./8.jpg');"></div>
+        <div class="heading">
+            <h1>Now,is your turn</h1>
+        </div>
+
+    </div>
+    <div class="music-player">
+        <p>当前正在播放:花月成双</p>
+        <audio controls autoplay loop src="多田葵 (ただ あおい) - Brave Song.ogg">
+            <!-- src为音乐的路径 -->
+            <source src="多田葵 (ただ あおい) - Brave Song.ogg" type="audio/mpeg">
+        </audio>
+    </div>
+    <div id="retutop"><a href="#db" id="btn"></a></div>
+
+    <!-- <script type="text/javascript">
+        window.onload = function () {
+            var totop = ducoment.getElemntById("btn");
+            totop.style.display = "none";
+            var timer = null;
+            totop.onclick = function () {
+                timer = setInterval(function () {
+                    var backTop = document.documentElement.scrollTop || document.body.scrollTop;
+                    var speedTop = backTop / 5;
+                    document.documentElement.scrollTop = backTop - speedTop;
+                    if (backTop == 0) {
+                        clearInterval(timer);
+                    }
+                }, 30);
+            }
+            var pageHeight = 700;
+            window.onscroll = function () {
+                var backTop = document.documentElement.scrollTop || document.body.scrollTop;
+                if (backTop > pageHeight) {
+                    totop.style.display = "block";
+                }
+                else {
+                    totop.style.display = "none";
+                }
+            }
+        }
+    </script> -->
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <script src="vue.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding:0%;
+        }
+        ul{
+            list-style: none;
+        }
+        .c_nav{
+            width: 900px;
+            height: 42px;
+            margin: 0 auto;
+            border-radius: 5px;
+            position: relative;
+        }
+        .c_nav{
+            float:left;
+            width: 83px;
+            text-align: center;
+            line-height: 42px;
+        }
+        .c_nav li a{
+            color: #333;
+            display: inline-block;
+            height: 42px;
+        }
+        header{
+            background: #ccc;
+        }
+        .c_nav li.current a{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-component>
+            <template v-slot:header>
+                <div id="c_nav" class="c_nav">
+                    <span class="cloud">
+                        <ul ref="nav">
+                            <li v-bind:class="{currentime}" v-for="item,key in list" @mouseenter="current(key)" @mouseleave="cancel()" v-bind:id=key>
+                                <a href="#">{{item}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </template>
+        </my-component>
+    </div>
+    <script>
+        Vue.component('my-component',{
+            render(createElement){
+                return createElement('div',[
+                    createElement('header',this.$slots.header),
+                ])
+            }
+        })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                list:['首页新闻','公司简介','招聘信息','活动策划','师资力量'],
+            },
+            methods:{
+                current(key){
+                    vm.$refs.nav.getElementsByTagName('li')[key].className='current';
+                },
+                cancel(){
+                    for(var i=0;i<vm.$refs.nav.getElementsByTagName('li').length;i++){
+                        vm.$refs.nav.getElementsByTagName('li')[i].className= ''
+                    }
+                }
+                }
+        })
+    </script>
+</body>
+</html>

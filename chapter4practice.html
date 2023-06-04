@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <div v-for="item in showList">{{item}}</div>
+            <div @click="showAll = !showAll" class="status">{{flag}}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    fruitList:[
+                        '草莓','苹果','香蕉','榴莲','香梨'//显示的数据
+                    ],
+                    showAll:false,
+                }
+            },
+            computed:{
+                showList:function(){
+                    if(this.showAll == false){
+                        var showList = [];
+                        if(this.fruitList.length>4){
+                            for(var i=0;i<4;i++){
+                                showList.push(this.fruitList[i])
+                            }
+                        }
+                        else{
+                            showList = this.fruitList
+                        }
+                        return showList;
+                    }
+                },
+                flag:function(){
+                    if(this.showAll == false)
+                    return '单击展开'
+                    else{
+                    return '单击收齐'
+                }
+                }
+                
+            }
+        })
+    </script>
+</body>
+</html>

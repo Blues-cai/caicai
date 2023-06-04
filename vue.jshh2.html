@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑马灯效果</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">  
+        <input type="button" value="浪起来" @click="lang">
+        <input type="button" value="低调" @click="stop">
+        <h4>{{msg}}</h4>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+        data:{
+            msg:'猥琐发育,别浪!',
+            intervalid:null//在data上定义定时器id
+        },
+        methods:{
+            lang(){
+                // console.log(this.msg)
+                //获取头字符
+                var _this = this
+                if(this.intervalid!=null) return;
+            this.intervalid=setInterval(function(){
+                var start = _this.msg.substring(0,1)
+                //获取后面的字符
+                var end = _this.msg.substring(1)
+                //拼接新的字符串并赋值给this.msg
+                _this.msg = end + start
+                //vm实例会监听自己身上的data中所有数据的改编，只要数据发生变化就会自动把最新的数据从data山同步到页面去
+                //程序员中需要关心数据，不需要考虑如何重新渲染到页面
+                },400)
+            },
+            stop(){
+                clearInterval(this.intervalid)
+                this.intervalid=null;//每次清楚了定时器之后，需要重新把intervalid置为null
+            }
+        }
+        })
+        
+        //给浪起来按钮绑定一个点击时间,v-on
+        //在按钮的时间处理函数中，写一个相关的业务逻辑代码，即首先拿到msg字符串然后调用字符串的substring方法来进行字符串的截取操作，
+        //把第一个字符截取出来放到最后一个位置
+        //未来实现点击下按钮，自动截取的功能需要2步骤中的代码放到一个定时器中
+    </script>
+</body>
+</html>

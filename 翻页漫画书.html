@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>caicai</title>
+    <style>
+        body {
+            background-color: #9980FA;
+            display: flex;
+            justify-content: center;
+            /* text-align: center; */
+        }
+
+        .a {
+            width: 500px;
+            height: 600px;
+            position: absolute;
+            top: 200px;
+            transform-style: preserve-3d;
+            /*让子元素在3d空间中呈现*/
+            perspective: 900px;
+            /*透视，即视距的大小*/
+            transition: .8s;
+            /*transition:什么属性要过度 动画时长 变化速度曲线 延迟时间;默认应该是延迟时间*/
+        }
+
+        .b,
+        .c,
+        .d,
+        .e,
+        .f {
+            width: 350px;
+            height: 500px;
+            position: absolute;
+            transform-origin: left;
+            /*翻页的起点*/
+            background-size: cover;
+            transition: calc(var(--i)*.3s);
+            /*翻页时元素之间的延迟*/
+            z-index: calc(var(--i))*99;
+            /*翻页时元素的层级*/
+        }
+
+        .b,
+        .c {
+            border: solid 20px #576574;
+            border-left: none;
+            top: -20px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .a:hover .b {
+            border-left: #576574 20px solid;
+        }
+
+        .a:hover .c,
+        .a:hover .d,
+        .a:hover .e,
+        .a:hover .f {
+            transform: rotateY(-180deg);
+            transition: calc(var(--s)*.9s);
+            z-index: calc(var(--s)*99);
+        }
+
+        .a:hover {
+            transform: translateX(100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a">
+        <div class="b" style="--i:2 ;background-image: url(djr1.jpg);"></div>
+        <div class="c" style="--i:4;--s:1 ;background-image: url(djr2.jpg);"></div>
+        <div class="d" style="--i:3;--s:2 ;background-image: url(djr3.jpg);"></div>
+        <div class="e" style="--i:2;--s:3 ;background-image: url(djr4.jpg);"></div>
+        <div class="f" style="--i:1;--s:4 ;background-image: url(djr5.jpg);"></div>
+    </div>
+</body>
+
+</html>
